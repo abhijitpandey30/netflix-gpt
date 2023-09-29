@@ -3,7 +3,18 @@
 - Create React app
 - Configure TailwindCSS
 - Header
+- Routing
 - Login form
+- SignUp Form
+- Form validation
+- useRef hook
+- Firebase setup
+- deploying our app to prod - https://netflixgpt-f9665.web.app
+- Create Sign up user account
+- Implement Sign In user API
+- Created  redux store with user slice
+- Sign out
+- Update Profile
 
 # Features
 - Login/SignUp page
