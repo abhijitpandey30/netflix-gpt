@@ -34,3 +34,17 @@
 - https://firebase.google.com/docs/auth/web/manage-users?hl=en#get_the_currently_signed-in_user
 - https://firebase.google.com/docs/reference/js/auth#signout
 - https://firebase.google.com/docs/auth/web/manage-users?hl=en#update_a_users_profile
+
+- moving onAuthStateChnage inside header - as it is always present, also it's inside RouterProvider
+
+- TMDB  - login - go to edit profile -> API ->
+API Key
+4ce9ae229e4bddb5c8845d830368acd6
+
+
+API Read Access Token
+eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0Y2U5YWUyMjllNGJkZGI1Yzg4NDVkODMwMzY4YWNkNiIsInN1YiI6IjY1MWIwZmFlOWQ1OTJjMDEwMmMwYzZjYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Zfg-oFxdhIOjlwsdt1ShOHRLZCWz2WN_LP5BYq-H5J4
+
+API is hit twice - due to React.StrictMode - done by react extra rendering to check for any inconsistency between your calls - > Only happens in development mode!! -not a bad thing
+
+- https://developer.themoviedb.org/reference/movie-videos

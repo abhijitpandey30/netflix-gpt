@@ -10,11 +10,17 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
-  const navigate = useNavigate();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prevState) => !prevState);
+  };
+
   const dispatch = useDispatch();
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
@@ -36,65 +42,70 @@ const Login = () => {
 
     if (!isSignInForm) {
       // Sign Up
-      createUserWithEmailAndPassword(
-        auth,
-        emailRef.current.value,
-        passwordRef.current.value
-      )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          updateProfile(user, {
-            displayName: nameRef.current.value,
-            photoURL:
-              "https://www.cnet.com/a/img/resize/6e75c99a076ab34b3b3524fa2e2a46411ee9602b/hub/2019/01/23/51ef8895-4ea6-44ad-bf36-df89de50a466/marvels-daredevil-season-1-key-art-01-copy.jpg?auto=webp&fit=crop&height=675&width=1200",
-          })
-            .then(() => {
-              // Profile updated!
-              const { uid, email, displayName, photoURL } = auth.currentUser;
-              dispatch(
-                addUser({
-                  uid: uid,
-                  email: email,
-                  displayName: displayName,
-                  photoURL: photoURL,
-                })
-              );
-              navigate("/browse");
-            })
-            .catch((error) => {
-              setErrorMsg(error);
-            });
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMsg(
-            `Failed with code= ${errorCode} and message - ${errorMessage}`
-          );
-        });
+      signUpUser();
     } else {
       // Sign In
-      signInWithEmailAndPassword(
-        auth,
-        emailRef.current.value,
-        passwordRef.current.value
-      )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMsg(
-            `Failed with code= ${errorCode} and message - ${errorMessage}`
-          );
-        });
+      signInUser();
     }
+  };
+
+  const signInUser = () => {
+    signInWithEmailAndPassword(
+      auth,
+      emailRef.current.value,
+      passwordRef.current.value
+    )
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMsg(
+          `Failed with code= ${errorCode} and message - ${errorMessage}`
+        );
+      });
+  };
+
+  const signUpUser = () => {
+    createUserWithEmailAndPassword(
+      auth,
+      emailRef.current.value,
+      passwordRef.current.value
+    )
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        updateProfile(user, {
+          displayName: nameRef.current.value,
+          photoURL: USER_AVATAR,
+        })
+          .then(() => {
+            // Profile updated!
+            const { uid, email, displayName, photoURL } = auth.currentUser;
+            dispatch(
+              addUser({
+                uid: uid,
+                email: email,
+                displayName: displayName,
+                photoURL: photoURL,
+              })
+            );
+          })
+          .catch((error) => {
+            setErrorMsg(error);
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMsg(
+          `Failed with code= ${errorCode} and message - ${errorMessage}`
+        );
+      });
   };
 
   return (
@@ -130,11 +141,52 @@ const Login = () => {
           className="p-4 my-4 w-full bg-gray-700"
         />
         <input
-          type="text"
+          type={isPasswordVisible ? "text" : "password"}
           ref={passwordRef}
           placeholder="Password"
           className="p-4 my-4 w-full bg-gray-700"
         />
+        {/* <button
+        className="absolute inset-y-0 right-0 flex items-center px-4 border border-white"
+        onClick={togglePasswordVisibility}
+      >
+        {isPasswordVisible ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        )}
+      </button> */}
         <p className="text-red-500 font-bold text-lg">{errorMsg}</p>
         <button
           onClick={handleFormSubmit}
