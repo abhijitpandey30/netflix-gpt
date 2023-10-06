@@ -29,6 +29,7 @@
 - Embedded video with auto play and mute
 - Build Secondary movies
 - Built movies, TMDB img CDN, Movies - popular, upcoming & trending
+- GPT search feature
 # Features
 - Login/SignUp page
     - SignIn/SignUp form
