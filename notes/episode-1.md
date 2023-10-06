@@ -50,3 +50,6 @@ API is hit twice - due to React.StrictMode - done by react extra rendering to ch
 - https://developer.themoviedb.org/reference/movie-videos
 
 - https://developer.themoviedb.org/docs/image-basics
+
+- https://platform.openai.com/ - Login -> personal - > view API keys - create - copy
+- npm install openai
