@@ -48,3 +48,5 @@ eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0Y2U5YWUyMjllNGJkZGI1Yzg4NDVkODMwMzY4YWNkNiIsInN
 API is hit twice - due to React.StrictMode - done by react extra rendering to check for any inconsistency between your calls - > Only happens in development mode!! -not a bad thing
 
 - https://developer.themoviedb.org/reference/movie-videos
+
+- https://developer.themoviedb.org/docs/image-basics

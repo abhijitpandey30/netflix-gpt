@@ -27,6 +27,8 @@
 - Plainning for mainContainer & Secondary container
 - Update Store with trailer video
 - Embedded video with auto play and mute
+- Build Secondary movies
+- Built movies, TMDB img CDN, Movies - popular, upcoming & trending
 # Features
 - Login/SignUp page
     - SignIn/SignUp form
