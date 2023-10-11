@@ -4,7 +4,7 @@ import Shimmer from "./Shimmer";
 
 const MovieCard = ({ posterPath }) => {
   return (
-    <div className="w-48 pr-4">
+    <div className="w-36 sm:w-40 md:w-48 pr-4">
       {posterPath ? (
         <img src={IMG_CDN_URL + posterPath} alt="movie" />
       ) : (
